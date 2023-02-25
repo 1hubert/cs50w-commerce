@@ -16,18 +16,30 @@ class User(AbstractUser):
 # 2) python manage.py migrate 
 # to migrate those changes to your database
 
-class AuctionListing():
+class AuctionListing(models.Model):
+    CATEGORY_CHOICES = (
+        (CLOTH := 'CLOTHING', 'Clothing & Accessories'),
+        (HEALTH := 'HEALTH', 'Health & Beauty'),
+        (FIT := 'FITNESS', 'Fitness'),
+        (JWLR := 'JEWELRY', 'Jewelry'),
+        (PET := 'PET', 'Pet Supplies'),
+        (MOB := 'MOBILE', 'Mobile Phones & Accessories'),
+        (CAM := 'CAMERAS', 'Cameras & Photos')
+    )
+    
     user_id = models.IntegerField()
     title = models.CharField(max_length=150)
-    price = models.IntegerField()
-    #photo = models.URLField()
+    description = models.CharField(max_length=500)
+    starting_bid = models.IntegerField()
+    photo = models.URLField()
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
 
-class Bid():
+class Bid(models.Model):
     user_id = models.IntegerField()
     listing_id = models.IntegerField()
     value = models.IntegerField()
 
-class Comment():
+class Comment(models.Model):
     user_id = models.IntegerField()
     listing_id = models.IntegerField()
     body = models.CharField(max_length=500)
