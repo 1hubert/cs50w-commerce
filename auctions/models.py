@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.timezone import now
 
 
 class User(AbstractUser):
@@ -40,7 +41,11 @@ class Bid(models.Model):
     value = models.IntegerField()
 
 class Comment(models.Model):
+    created_at = models.DateTimeField(default=now)
+    listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
     user_id = models.IntegerField()
-    listing_id = models.IntegerField()
     body = models.CharField(max_length=500)
+    
+    def __str__(self) -> str:
+        return f'"{self.body}" by {self.user_id}'
     
