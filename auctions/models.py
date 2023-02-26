@@ -28,7 +28,8 @@ class AuctionListing(models.Model):
         (CAM := 'CAMERAS', 'Cameras & Photos')
     )
     
-    user_id = models.IntegerField()
+    created_at = models.DateTimeField(default=now)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     description = models.CharField(max_length=500)
     starting_bid = models.IntegerField()
@@ -36,14 +37,15 @@ class AuctionListing(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
 
 class Bid(models.Model):
-    user_id = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=now)
     listing_id = models.IntegerField()
     value = models.IntegerField()
 
 class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=now)
     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
-    user_id = models.IntegerField()
     body = models.CharField(max_length=500)
     
     def __str__(self) -> str:
