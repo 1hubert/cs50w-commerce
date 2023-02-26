@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User, AuctionListing, Bid, Comment
+from .models import CATEGORY_CHOICES
 
 
 def index(request):
@@ -69,10 +70,13 @@ def new_listing(request):
         description = request.POST['description']
         starting_bid = int(request.POST['starting_bid'])
         image_url = request.POST['image_url']
+        category = request.POST['category']
         
         # Attempt to create a new listing
-        listing = AuctionListing(title=title, description=description, starting_bid=starting_bid, photo=image_url, user=request.user)
+        listing = AuctionListing(title=title, description=description, starting_bid=starting_bid, photo=image_url, user=request.user, category=category)
         listing.save()
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, 'auctions/new_listing.html')
+        return render(request, 'auctions/new_listing.html', {
+            "category_choices": CATEGORY_CHOICES
+        })

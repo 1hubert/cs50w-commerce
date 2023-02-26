@@ -17,8 +17,7 @@ class User(AbstractUser):
 # 2) python manage.py migrate 
 # to migrate those changes to your database
 
-class AuctionListing(models.Model):
-    CATEGORY_CHOICES = (
+CATEGORY_CHOICES = (
         (CLOTH := 'CLOTHING', 'Clothing & Accessories'),
         (HEALTH := 'HEALTH', 'Health & Beauty'),
         (FIT := 'FITNESS', 'Fitness'),
@@ -27,7 +26,8 @@ class AuctionListing(models.Model):
         (MOB := 'MOBILE', 'Mobile Phones & Accessories'),
         (CAM := 'CAMERAS', 'Cameras & Photos')
     )
-    
+
+class AuctionListing(models.Model):
     created_at = models.DateTimeField(default=now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
