@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Single Listing</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <h1>{{ listing.title }}</h1>
+
+    <p>{{ listing.description }}</p>
+{% endblock %}

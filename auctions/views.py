@@ -82,3 +82,13 @@ def new_listing(request):
         return render(request, 'auctions/new_listing.html', {
             "category_choices": CATEGORY_CHOICES
         })
+      
+        
+def show_listing(request, listing_id):
+    if request.method == 'POST':
+        pass
+    
+    else:
+        return render(request, 'auctions/listing.html', {
+            "listing": AuctionListing.objects.get(id=listing_id)
+        })
