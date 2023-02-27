@@ -9,7 +9,9 @@ from .models import CATEGORY_CHOICES
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        "listings": AuctionListing.objects.all()
+    })
 
 
 def login_view(request):
