@@ -1,11 +1,27 @@
 {% extends "auctions/layout.html" %}
 
+{% load static %}
+
 {% block body %}
     <h2>Active Listings</h2>
 
-    <ul>
+    <div class="row row-cols-1 row-cols-md-6 g-4">
         {% for listing in listings %}
-            <li>{{listing.title}} ({{listing.description}})</li>
+        <div class="col">
+            <div class="card">
+                {% if listing.photo %}
+                    <img src="{{ listing.photo }}" class="card-img-top" alt="Auction Image">
+                {% else %}
+                    <img src="{% static 'auctions/no_photo_available.jpg' %}" class="card-img-top" alt="Auction Image">
+                {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ listing.title }}</h5>
+                <p class="card-text"><b>Current Price: {{ listing.current_price }}</b></p>
+                <p class="card-text">{{ listing.description }}</p>
+              </div>
+            </div>
+          </div>
+            
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}
