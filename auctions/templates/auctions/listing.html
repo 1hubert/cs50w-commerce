@@ -2,13 +2,19 @@
 
 {% block body %}
 
-    <h2>Single Listing</h2>
-
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
 
-    <h1>{{ listing.title }}</h1>
+    <h1>Listing: {{ listing.title }}</h1>
 
     <p>{{ listing.description }}</p>
+
+    <h2>${{ listing.current_price }}</h2>
+
+    <h3>Details</h3>
+    <ul>
+        <li>Listed by: {{ listing.user }}</li>
+        <li>Category: {{ listing.category }}</li>
+    </ul>
 {% endblock %}
