@@ -1,5 +1,7 @@
 {% extends "auctions/layout.html" %}
 
+{% load static %}
+
 {% block body %}
 
     {% if message %}
@@ -7,6 +9,14 @@
     {% endif %}
 
     <h1>Listing: {{ listing.title }}</h1>
+
+    <div>
+        {% if listing.photo %}
+            <img style="max-width: 25%;" src="{{ listing.photo }}" class="img-fluid" alt="Auction Image">
+        {% else %}
+            <img src="{% static 'auctions/no_photo_available.jpg' %}" class="card-img-top" alt="Auction Image">
+        {% endif %}
+    </div>
 
     <p>{{ listing.description }}</p>
 
@@ -17,4 +27,6 @@
         <li>Listed by: {{ listing.user }}</li>
         <li>Category: {{ listing.category }}</li>
     </ul>
+    
+    <a href="watchlist/{{ listing.id }}" class="btn btn-outline-primary">Add to Watchlist</a>
 {% endblock %}
