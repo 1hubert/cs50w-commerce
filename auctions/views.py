@@ -101,3 +101,7 @@ def watchlist_add(request, listing_id):
     else:
         listing.users_watching.add(request.user)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def watchlist(request):
+    return render(request, "auctions/watchlist.html")
