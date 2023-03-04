@@ -5,5 +5,24 @@
 {% block body %}
     <h2>Watchlist</h2>
 
-    
+    <div class="row row-cols-1 row-cols-md-6 g-4">
+        {% for listing in listings %}
+        <div class="col">
+            <div class="card">
+                {% if listing.photo %}
+                    <img src="{{ listing.photo }}" class="card-img-top" alt="Auction Image">
+                {% else %}
+                    <img src="{% static 'auctions/no_photo_available.jpg' %}" class="card-img-top" alt="Auction Image">
+                {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ listing.title }}</h5>
+                <p class="card-text"><b>Current Price: {{ listing.current_price }}</b></p>
+                <p class="card-text">{{ listing.description }}</p>
+                <a href="show/{{ listing.id }}" class="btn btn-primary stretched-link">Go to listing</a>
+              </div>
+            </div>
+          </div>
+            
+        {% endfor %}
+    </div>
 {% endblock %}

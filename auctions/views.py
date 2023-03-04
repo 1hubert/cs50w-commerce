@@ -104,4 +104,6 @@ def watchlist_add(request, listing_id):
 
 
 def watchlist(request):
-    return render(request, "auctions/watchlist.html")
+    return render(request, "auctions/watchlist.html", {
+        "listings": AuctionListing.objects.filter(users_watching=request.user)
+    })
