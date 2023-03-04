@@ -89,8 +89,12 @@ def show_listing(request, listing_id):
         pass
     
     else:
+        listing = get_object_or_404(AuctionListing, id=listing_id)
+        watchlisted = listing.users_watching.filter(id=request.user.id).exists()
+        
         return render(request, 'auctions/listing.html', {
-            "listing": AuctionListing.objects.get(id=listing_id)
+            "listing": AuctionListing.objects.get(id=listing_id),
+            "watchlisted": watchlisted
         })
         
 

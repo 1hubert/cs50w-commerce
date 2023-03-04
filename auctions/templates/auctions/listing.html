@@ -28,5 +28,9 @@
         <li>Category: {{ listing.category }}</li>
     </ul>
 
-    <a href="{% url 'watchlist_add' listing.id %}" class="btn btn-outline-primary">Add to Watchlist</a>
+    {% if watchlisted %}
+        <a href="{% url 'watchlist_add' listing.id %}" class="btn btn-outline-primary">Remove from Watchlist</a>
+    {% else %}
+        <a href="{% url 'watchlist_add' listing.id %}" class="btn btn-outline-primary">Add to Watchlist</a>
+    {% endif %}
 {% endblock %}
