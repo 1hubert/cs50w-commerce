@@ -111,3 +111,15 @@ def watchlist(request):
     return render(request, "auctions/watchlist.html", {
         "listings": AuctionListing.objects.filter(users_watching=request.user)
     })
+    
+def place_bid(request):
+    if request.method == 'POST':
+        # check will you get all the needed variables (bid, listing_id, user_id)
+        bid = request.POST['bid']
+        user_id = request.user.id
+        # check for bids for this listing
+        # if no bids, check for starting price
+        # the new bid must be better than that
+        return HttpResponse(f'{bid}$ by {user_id}')
+    else:
+        return HttpResponseRedirect(reverse("index"))
