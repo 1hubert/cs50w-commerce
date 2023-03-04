@@ -32,7 +32,7 @@ class AuctionListing(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     description = models.CharField(max_length=500)
-    current_price = models.IntegerField()
+    starting_price = models.IntegerField()
     photo = models.URLField()
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     users_watching = models.ManyToManyField(User, related_name='users_watching', default=None, blank=True)
