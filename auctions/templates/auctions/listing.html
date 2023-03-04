@@ -27,6 +27,6 @@
         <li>Listed by: {{ listing.user }}</li>
         <li>Category: {{ listing.category }}</li>
     </ul>
-    
-    <a href="watchlist/{{ listing.id }}" class="btn btn-outline-primary">Add to Watchlist</a>
+
+    <a href="{% url 'watchlist_add' listing.id %}" class="btn btn-outline-primary">Add to Watchlist</a>
 {% endblock %}
