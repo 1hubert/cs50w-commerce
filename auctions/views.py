@@ -161,7 +161,6 @@ def place_bid(request, listing_id):
         listing = get_object_or_404(AuctionListing, id=listing_id)
         new_bid = Bid(value=bid_requested, user=user, listing=listing)
         new_bid.save()
-        print(new_bid)
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     else:
         return HttpResponseRedirect(reverse('index'))
