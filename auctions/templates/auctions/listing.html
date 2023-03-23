@@ -32,6 +32,12 @@
         </div>
     </form>
 
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <h3>Details</h3>
     <ul>
         <li>Listed by: {{ listing.user }}</li>

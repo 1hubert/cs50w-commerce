@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.db.models import Max
@@ -142,6 +143,7 @@ def place_bid(request, listing_id):
 
             # If the bid  requested is too low, return to the last-viewed page
             if bid_requested <= max_bid:
+                messages.error(request, 'Your bid must be higher than the highest bid!', extra_tags='danger')
                 return HttpResponseRedirect(request.META['HTTP_REFERER'])
         else:
             starting_price = get_object_or_404(
@@ -151,6 +153,7 @@ def place_bid(request, listing_id):
 
             # If the bid  requested is too low, return to the last-viewed page
             if bid_requested <= starting_price:
+                messages.error(request, 'Your bid must be higher than the starting price!', extra_tags='danger')
                 return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
