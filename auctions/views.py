@@ -208,3 +208,16 @@ def add_comment(request, listing_id):
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     else:
         return HttpResponseRedirect(reverse('index'))
+
+
+def categories(request):
+    return render(request, 'auctions/all_categories.html', {
+        "category_choices": CATEGORY_CHOICES
+    })
+
+
+def listings_by_category(request, category):
+    return render(request, 'auctions/listings_by_category.html', {
+        "listings": AuctionListing.objects.filter(category=category),
+        "category": category
+    })
