@@ -40,7 +40,7 @@ class AuctionListing(models.Model):
 class Bid(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=now)
-    listing_id = models.IntegerField()
+    listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
     value = models.IntegerField()
 
 class Comment(models.Model):
