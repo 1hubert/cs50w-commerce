@@ -219,5 +219,5 @@ def categories(request):
 def listings_by_category(request, category):
     return render(request, 'auctions/listings_by_category.html', {
         "listings": AuctionListing.objects.filter(category=category),
-        "category": category
+        "category": [choice[1] for choice in CATEGORY_CHOICES if choice[0] == category][0]
     })
