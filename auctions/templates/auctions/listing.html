@@ -29,13 +29,15 @@
 
         <p>X bid(s) so far.</p>
 
-        <form action="{% url 'place_bid' listing.id %}" method="post">
-            <div class="input-group mb-3" id="bid_input">
-                {% csrf_token %}
-                <input type="number" name="bid" class="form-control" placeholder="Bid" autocomplete="off" required>
-                <input class="btn btn-outline-secondary" type="submit" value="Place bid">
-            </div>
-        </form>
+        {% if request.user.is_authenticated %}
+            <form action="{% url 'place_bid' listing.id %}" method="post">
+                <div class="input-group mb-3" id="bid_input">
+                    {% csrf_token %}
+                    <input type="number" name="bid" class="form-control" placeholder="Bid" autocomplete="off" required>
+                    <input class="btn btn-outline-secondary" type="submit" value="Place bid">
+                </div>
+            </form>
+        {% endif %}
     {% else %}
         {% if listing.highest_bidder %}
             <h2 style='color:green;'>Sold to {{ listing.highest_bidder }} for ${{ listing.price }}!</h2>
