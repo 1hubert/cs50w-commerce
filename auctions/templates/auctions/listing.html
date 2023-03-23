@@ -73,4 +73,20 @@
     {% if listing.user == request.user and listing.active %}
         <a href="{% url 'close_listing' listing.id %}" class="btn btn-outline-danger">Close Listing</a>
     {% endif %}
+
+    {% if request.user.is_authenticated %}
+        <h3>Comments</h3>
+        <form action="{% url 'add_comment' listing.id %}" method="post">
+            {% csrf_token %}
+            <div class="input-group mb-3" id="comment_input">
+                <input type="text" name="comment" class="form-control" placeholder="Write your comment here!" autocomplete="off" required>
+                <input class="btn btn-outline-secondary" type="submit" value="Add comment">
+            </div>
+        </form>
+        <ul>
+            {% for comment in comments %}
+                <li>{{ comment }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}

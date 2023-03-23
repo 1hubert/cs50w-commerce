@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.db.models import Max
 from django.http import HttpResponse, HttpResponseRedirect
@@ -121,9 +122,12 @@ def show_listing(request, listing_id):
         else:
             listing.price = listing.starting_price
 
+        comments = Comment.objects.filter(listing=listing.id)
+
         return render(request, 'auctions/listing.html', {
             "listing": listing,
-            "watchlisted": watchlisted
+            "watchlisted": watchlisted,
+            "comments": comments
         })
 
 
@@ -184,3 +188,23 @@ def close_listing(request, listing_id):
     listing.active = False
     listing.save()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def add_comment(request, listing_id):
+    listing = get_object_or_404(
+        AuctionListing,
+        id=listing_id
+    )
+    if request.method == 'POST':
+        comment = request.POST['comment']
+        user = request.user
+        new_comment = Comment(
+            body=comment,
+            user=user,
+            listing=listing
+        )
+        new_comment.save()
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    else:
+        return HttpResponseRedirect(reverse('index'))

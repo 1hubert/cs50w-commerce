@@ -51,4 +51,4 @@ class Comment(models.Model):
     body = models.CharField(max_length=500)
 
     def __str__(self) -> str:
-        return f'"{self.body}" by {self.user}'
+        return f'{self.user}: {self.body}'
