@@ -102,10 +102,17 @@ def show_listing(request, listing_id):
         listing = get_object_or_404(AuctionListing, id=listing_id)
         watchlisted = listing.users_watching.filter(id=request.user.id).exists()
 
+        bids = Bid.objects.filter(listing=listing.id)
+        if bids:
+            listing.price = bids.aggregate(
+                Max('value')
+            )['value__max']
+        else:
+            listing.price = listing.starting_price
+
         return render(request, 'auctions/listing.html', {
-            "listing": AuctionListing.objects.get(id=listing_id),
-            "watchlisted": watchlisted,
-            "max_bid": Bid.objects.filter(listing=listing_id).aggregate(Max('value'))['value__max']
+            "listing": listing,
+            "watchlisted": watchlisted
         })
 
 
