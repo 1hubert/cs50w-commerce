@@ -41,7 +41,7 @@
     <h3>Details</h3>
     <ul>
         <li>Listed by: {{ listing.user }}</li>
-        <li>Category: {{ listing.category }}</li>
+        <li>Category: {{ listing.get_category_display }}</li>
     </ul>
 
     <a href="{% url 'watchlist_add' listing.id %}" class="btn btn-outline-primary">
