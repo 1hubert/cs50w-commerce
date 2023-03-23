@@ -13,8 +13,8 @@ class User(AbstractUser):
 # auction categories (model is optional, category functionality is required)
 
 # Remember that each time you change anything in auctions/models.py, you’ll need to first run:
-# 1) python manage.py makemigrations 
-# 2) python manage.py migrate 
+# 1) python manage.py makemigrations
+# 2) python manage.py migrate
 # to migrate those changes to your database
 
 CATEGORY_CHOICES = (
@@ -48,7 +48,6 @@ class Comment(models.Model):
     created_at = models.DateTimeField(default=now)
     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
     body = models.CharField(max_length=500)
-    
+
     def __str__(self) -> str:
-        return f'"{self.body}" by {self.user_id}'
-    
+        return f'"{self.body}" by {self.author}'
