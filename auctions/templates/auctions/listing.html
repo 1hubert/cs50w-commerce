@@ -64,6 +64,10 @@
                 Add to Watchlist
             {% endif %}
         </a>
+    {% elif watchlisted %}
+        <a href="{% url 'watchlist_add' listing.id %}" class="btn btn-outline-primary" disabled>
+            Remove from Watchlist</a>
+        </a>
     {% endif %}
 
     {% if listing.user == request.user and listing.active %}
