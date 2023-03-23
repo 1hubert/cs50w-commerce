@@ -81,12 +81,19 @@ def new_listing(request):
     if request.method == 'POST':
         title = request.POST['title']
         description = request.POST['description']
-        starting_bid = int(request.POST['starting_bid'])
+        starting_price = int(request.POST['starting_price'])
         image_url = request.POST['image_url']
         category = request.POST['category']
 
         # Attempt to create a new listing
-        listing = AuctionListing(title=title, description=description, starting_bid=starting_bid, photo=image_url, user=request.user, category=category)
+        listing = AuctionListing(
+            title=title,
+            description=description,
+            starting_price=starting_price,
+            photo=image_url,
+            user=request.user,
+            category=category
+        )
         listing.save()
         return HttpResponseRedirect(reverse("index"))
     else:
