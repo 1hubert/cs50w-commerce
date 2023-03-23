@@ -56,13 +56,15 @@
         <li>Category: {{ listing.get_category_display }}</li>
     </ul>
 
-    <a href="{% url 'watchlist_add' listing.id %}" class="btn btn-outline-primary">
-        {% if watchlisted %}
-            Remove from Watchlist</a>
-        {% else %}
-            Add to Watchlist
-        {% endif %}
-    </a>
+    {% if listing.active %}
+        <a href="{% url 'watchlist_add' listing.id %}" class="btn btn-outline-primary">
+            {% if watchlisted %}
+                Remove from Watchlist</a>
+            {% else %}
+                Add to Watchlist
+            {% endif %}
+        </a>
+    {% endif %}
 
     {% if listing.user == request.user and listing.active %}
         <a href="{% url 'close_listing' listing.id %}" class="btn btn-outline-danger">Close Listing</a>
