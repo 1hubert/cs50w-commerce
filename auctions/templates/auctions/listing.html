@@ -20,11 +20,11 @@
 
     <p>{{ listing.description }}</p>
 
-    <h2>${{ listing.starting_price }}</h2>
+    <h2>${{ max_bid }}</h2>
 
     <p>X bid(s) so far.</p>
 
-    <form action="{% url 'place_bid' %}" method="post">
+    <form action="{% url 'place_bid' listing.id %}" method="post">
         <div class="input-group mb-3" id="bid_input">
             {% csrf_token %}
             <input type="number" name="bid" class="form-control" placeholder="Bid" autocomplete="off" required>
