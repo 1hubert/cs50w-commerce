@@ -45,10 +45,10 @@ class Bid(models.Model):
     value = models.IntegerField()
 
 class Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=now)
     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
     body = models.CharField(max_length=500)
 
     def __str__(self) -> str:
-        return f'"{self.body}" by {self.author}'
+        return f'"{self.body}" by {self.user}'
