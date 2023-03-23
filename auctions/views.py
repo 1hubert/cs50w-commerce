@@ -115,6 +115,9 @@ def show_listing(request, listing_id):
             listing.price = bids.aggregate(
                 Max('value')
             )['value__max']
+            listing.highest_bidder = bids.filter(
+                value=listing.price
+            )[0].user
         else:
             listing.price = listing.starting_price
 
@@ -139,7 +142,8 @@ def watchlist(request):
     })
 
 def place_bid(request, listing_id):
-    if request.method == 'POST':
+    listing = get_object_or_404(AuctionListing, id=listing_id)
+    if request.method == 'POST' and listing.active == True:
         bid_requested = int(request.POST['bid'])
         user_id = request.user.id
         bids = Bid.objects.filter(listing_id=listing_id)
@@ -168,9 +172,15 @@ def place_bid(request, listing_id):
         # Create a new bid
         # return HttpResponse(f'starting price is {starting_price}$ / bid requested is {bid_requested}$')
         user = get_object_or_404(User, id=user_id)
-        listing = get_object_or_404(AuctionListing, id=listing_id)
         new_bid = Bid(value=bid_requested, user=user, listing=listing)
         new_bid.save()
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     else:
         return HttpResponseRedirect(reverse('index'))
+
+
+def close_listing(request, listing_id):
+    listing = get_object_or_404(AuctionListing, id=listing_id)
+    listing.active = False
+    listing.save()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])

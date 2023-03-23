@@ -8,7 +8,11 @@
         <div>{{ message }}</div>
     {% endif %}
 
-    <h1>Listing: {{ listing.title }}</h1>
+    {% if listing.active %}
+        <h1>Listing: {{ listing.title }}</h1>
+    {% else %}
+        <h1 style='color:grey;'>Listing: {{ listing.title }} (Closed)</h1>
+    {% endif %}
 
     <div>
         {% if listing.photo %}
@@ -20,17 +24,25 @@
 
     <p>{{ listing.description }}</p>
 
-    <h2>${{ listing.price }}</h2>
+    {% if listing.active %}
+        <h2>${{ listing.price }}</h2>
 
-    <p>X bid(s) so far.</p>
+        <p>X bid(s) so far.</p>
 
-    <form action="{% url 'place_bid' listing.id %}" method="post">
-        <div class="input-group mb-3" id="bid_input">
-            {% csrf_token %}
-            <input type="number" name="bid" class="form-control" placeholder="Bid" autocomplete="off" required>
-            <input class="btn btn-outline-secondary" type="submit" value="Place bid">
-        </div>
-    </form>
+        <form action="{% url 'place_bid' listing.id %}" method="post">
+            <div class="input-group mb-3" id="bid_input">
+                {% csrf_token %}
+                <input type="number" name="bid" class="form-control" placeholder="Bid" autocomplete="off" required>
+                <input class="btn btn-outline-secondary" type="submit" value="Place bid">
+            </div>
+        </form>
+    {% else %}
+        {% if listing.highest_bidder %}
+            <h2 style='color:green;'>Sold to {{ listing.highest_bidder }} for ${{ listing.price }}!</h2>
+        {% else %}
+            <h2 style='color:red;'>Listing closed. No bids were placed.</h2>
+        {% endif %}
+    {% endif %}
 
     {% for message in messages %}
         <div class="alert alert-{{ message.tags }}">
@@ -51,4 +63,8 @@
             Add to Watchlist
         {% endif %}
     </a>
+
+    {% if listing.user == request.user and listing.active %}
+        <a href="{% url 'close_listing' listing.id %}" class="btn btn-outline-danger">Close Listing</a>
+    {% endif %}
 {% endblock %}

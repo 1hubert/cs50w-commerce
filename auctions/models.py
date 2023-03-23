@@ -28,13 +28,14 @@ CATEGORY_CHOICES = (
     )
 
 class AuctionListing(models.Model):
+    active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     description = models.CharField(max_length=500)
     starting_price = models.IntegerField()
     photo = models.URLField()
-    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     users_watching = models.ManyToManyField(User, related_name='users_watching', default=None, blank=True)
 
 class Bid(models.Model):
