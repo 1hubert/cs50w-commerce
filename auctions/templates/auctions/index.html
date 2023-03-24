@@ -17,7 +17,7 @@
                     {% endif %}
                   <div class="card-body">
                     <h5 class="card-title">{{ listing.title }}</h5>
-                    <p class="card-text"><b>Current Price: {{ listing.price }}</b></p>
+                    <p class="card-text"><b>Current Price: {{ listing.price }}$</b></p>
                     <p class="card-text">{{ listing.description }}</p>
                     <a href="{% url 'show_listing' listing.id %}" class="btn btn-primary stretched-link">Go to listing</a>
                   </div>
