@@ -119,8 +119,10 @@ def show_listing(request, listing_id):
             listing.highest_bidder = bids.filter(
                 value=listing.price
             )[0].user
+            listing.bid_count = bids.count()
         else:
             listing.price = listing.starting_price
+            listing.bid_count = 0
 
         comments = Comment.objects.filter(listing=listing.id)
 

@@ -27,7 +27,7 @@
     {% if listing.active %}
         <h2>${{ listing.price }}</h2>
 
-        <p>X bid(s) so far.</p>
+        <p>{{ listing.bid_count }} bid(s) so far.</p>
 
         {% if request.user.is_authenticated %}
             <form action="{% url 'place_bid' listing.id %}" method="post">
