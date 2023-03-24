@@ -34,7 +34,7 @@ class AuctionListing(models.Model):
     title = models.CharField(max_length=150)
     description = models.CharField(max_length=500)
     starting_price = models.IntegerField()
-    photo = models.URLField(required=False, blank=True)
+    photo = models.URLField(blank=True, null=True)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     users_watching = models.ManyToManyField(User, related_name='users_watching', default=None, blank=True)
 
