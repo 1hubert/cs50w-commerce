@@ -38,11 +38,17 @@ class AuctionListing(models.Model):
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     users_watching = models.ManyToManyField(User, related_name='users_watching', default=None, blank=True)
 
+    def __str__(self) -> str:
+        return f'listing: {self.title} by {self.user}'
+
 class Bid(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=now)
     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)
     value = models.IntegerField()
+
+    def __str__(self) -> str:
+        return f'{self.value}$ bid by user {self.user} on listing {self.listing}'
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
